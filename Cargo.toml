@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = [
+    "nt-load-order",
+    "nt-load-order-gui",
+]

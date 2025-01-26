@@ -1,0 +1,16 @@
+[package]
+name = "nt-load-order"
+version = "0.1.0"
+authors = ["Colin Finck <colin@reactos.org>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.95"
+dlv-list = "0.6.0"
+indexmap = "2.7.1"
+nt-apiset = "0.1.0"
+nt-hive = "0.3.0"
+pelite = "0.10.0"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+winreg = "0.55.0"
