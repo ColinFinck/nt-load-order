@@ -1,6 +1,6 @@
-1   ICON   "../img/nt-load-order.ico"
+1   ICON   "res/nt-load-order.ico"
 
-1   24     "nt-load-order-gui.exe.manifest"
+1   24     "res/nt-load-order-gui.exe.manifest"
 
 1 VERSIONINFO
  FILEVERSION CARGO_PKG_VERSION_MAJOR,CARGO_PKG_VERSION_MINOR,CARGO_PKG_VERSION_PATCH,0
@@ -19,7 +19,7 @@ BEGIN
             VALUE "FileDescription", "nt-load-order-gui"
             VALUE "FileVersion", CARGO_PKG_VERSION
             VALUE "InternalName", "nt-load-order-gui.exe"
-            VALUE "LegalCopyright", "Copyright ï¿½ 2023 Colin Finck"
+            VALUE "LegalCopyright", "Copyright © 2025 Colin Finck"
             VALUE "OriginalFilename", "nt-load-order-gui.exe"
             VALUE "ProductName", "nt-load-order-gui"
             VALUE "ProductVersion", CARGO_PKG_VERSION
