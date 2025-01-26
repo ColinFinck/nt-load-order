@@ -2,7 +2,16 @@
 name = "nt-load-order"
 version = "0.1.0"
 authors = ["Colin Finck <colin@reactos.org>"]
+description = "A library to determine the driver load order of a Windows system"
+homepage = "https://github.com/ColinFinck/nt-load-order"
+repository = "https://github.com/ColinFinck/nt-load-order"
+documentation = "https://docs.rs/nt-load-order"
+readme = "../README.md"
 edition = "2021"
+rust-version = "1.81"
+license = "MIT OR Apache-2.0"
+keywords = ["loadorder", "bootloader", "nt", "windows"]
+categories = ["os::windows-apis"]
 
 [dependencies]
 anyhow = "1.0.95"

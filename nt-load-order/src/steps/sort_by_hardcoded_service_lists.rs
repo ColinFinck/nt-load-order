@@ -1,3 +1,6 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 use dlv_list::VecList;
 
 use crate::steps::move_matching_elements_to_front;

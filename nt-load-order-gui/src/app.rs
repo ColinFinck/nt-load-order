@@ -1,3 +1,6 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 use std::{mem, ptr};
 
 use lazy_static::lazy_static;
@@ -248,7 +251,9 @@ impl App {
     }
 
     fn on_custom_system_root_path_press(&self, evt: nwg::Event) {
-        if evt == nwg::Event::OnMousePress(nwg::MousePressEvent::MousePressLeftUp) && self.select_custom_system_root() {
+        if evt == nwg::Event::OnMousePress(nwg::MousePressEvent::MousePressLeftUp)
+            && self.select_custom_system_root()
+        {
             self.update_load_order();
         }
     }

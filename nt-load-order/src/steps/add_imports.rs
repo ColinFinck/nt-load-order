@@ -1,3 +1,6 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 use std::collections::HashSet;
 use std::path::Path;
 

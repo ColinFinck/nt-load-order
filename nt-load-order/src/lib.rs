@@ -1,3 +1,20 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+//
+//! A library to determine the driver load order of a Windows system.
+//!
+//! nt-load-order can be used to analyze either the current operating system or any target system root directory.
+//! The latter step even works on non-Windows platforms (leveraging my platform-independent
+//! [nt-hive](https://crates.io/crates/nt-hive) crate).
+//!
+//! This project is closely related to my two-part blog series on WinDbg fundamentals, the Windows driver
+//! load order, and the nt-load-order crate:
+//!
+//! * [Part 1: WinDbg'ing our way into the Windows bootloader](https://colinfinck.de/posts/nt-load-order-part-1/)
+//! * [Part 2: More than you ever wanted to know](https://colinfinck.de/posts/nt-load-order-part-2/)
+
+#![doc(html_logo_url = "https://colinfinck.de/img/software/nt-load-order.svg")]
+
 mod registry;
 mod steps;
 

@@ -1,3 +1,6 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 mod add_imports;
 mod add_kernel_binaries;
 mod load_from_registry;

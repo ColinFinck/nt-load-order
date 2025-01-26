@@ -1,3 +1,6 @@
+// Copyright 2025 Colin Finck <colin@reactos.org>
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 mod local;
 mod target;
 
@@ -49,12 +52,8 @@ impl<'d> RegistryHive<'d> {
     pub fn key_node<'h>(&'h self, path: &str) -> Result<RegistryKeyNode<'d, 'h>> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(hive) => hive
-                .key_node(path)
-                .map(RegistryKeyNode::Local),
-            Self::Target(hive) => hive
-                .key_node(path)
-                .map(RegistryKeyNode::Target),
+            Self::Local(hive) => hive.key_node(path).map(RegistryKeyNode::Local),
+            Self::Target(hive) => hive.key_node(path).map(RegistryKeyNode::Target),
         }
     }
 }
@@ -77,48 +76,32 @@ impl<'d, 'h> RegistryKeyNode<'d, 'h> {
     pub fn subkey(&self, name: &str) -> Result<RegistryKeyNode<'d, 'h>> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(key_node) => key_node
-                .subkey(name)
-                .map(RegistryKeyNode::Local),
-            Self::Target(key_node) => key_node
-                .subkey(name)
-                .map(RegistryKeyNode::Target),
+            Self::Local(key_node) => key_node.subkey(name).map(RegistryKeyNode::Local),
+            Self::Target(key_node) => key_node.subkey(name).map(RegistryKeyNode::Target),
         }
     }
 
     pub fn subkeys<'n>(&'n self) -> Result<RegistrySubKeys<'d, 'h, 'n>> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(key_node) => {
-                Ok(RegistrySubKeys::Local(key_node.subkeys()))
-            }
-            Self::Target(key_node) => key_node
-                .subkeys()
-                .map(RegistrySubKeys::Target),
+            Self::Local(key_node) => Ok(RegistrySubKeys::Local(key_node.subkeys())),
+            Self::Target(key_node) => key_node.subkeys().map(RegistrySubKeys::Target),
         }
     }
 
     pub fn value(&self, name: &str) -> Result<RegistryKeyValue<'d, 'h>> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(key_node) => key_node
-                .value(name)
-                .map(RegistryKeyValue::Local),
-            Self::Target(key_node) => key_node
-                .value(name)
-                .map(RegistryKeyValue::Target),
+            Self::Local(key_node) => key_node.value(name).map(RegistryKeyValue::Local),
+            Self::Target(key_node) => key_node.value(name).map(RegistryKeyValue::Target),
         }
     }
 
     pub fn values<'n>(&'n self) -> Result<RegistryKeyValues<'d, 'h, 'n>> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(key_node) => {
-                Ok(RegistryKeyValues::Local(key_node.values()))
-            }
-            Self::Target(key_node) => key_node
-                .values()
-                .map(RegistryKeyValues::Target),
+            Self::Local(key_node) => Ok(RegistryKeyValues::Local(key_node.values())),
+            Self::Target(key_node) => key_node.values().map(RegistryKeyValues::Target),
         }
     }
 }
