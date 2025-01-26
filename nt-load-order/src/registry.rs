@@ -33,8 +33,8 @@ impl RegistryWorker {
     pub fn hive(&self) -> Result<RegistryHive> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(worker) => worker.hive().map(|local| RegistryHive::Local(local)),
-            Self::Target(worker) => worker.hive().map(|target| RegistryHive::Target(target)),
+            Self::Local(worker) => worker.hive().map(RegistryHive::Local),
+            Self::Target(worker) => worker.hive().map(RegistryHive::Target),
         }
     }
 }
@@ -51,10 +51,10 @@ impl<'d> RegistryHive<'d> {
             #[cfg(target_os = "windows")]
             Self::Local(hive) => hive
                 .key_node(path)
-                .map(|local| RegistryKeyNode::Local(local)),
+                .map(RegistryKeyNode::Local),
             Self::Target(hive) => hive
                 .key_node(path)
-                .map(|target| RegistryKeyNode::Target(target)),
+                .map(RegistryKeyNode::Target),
         }
     }
 }
@@ -79,10 +79,10 @@ impl<'d, 'h> RegistryKeyNode<'d, 'h> {
             #[cfg(target_os = "windows")]
             Self::Local(key_node) => key_node
                 .subkey(name)
-                .map(|local| RegistryKeyNode::Local(local)),
+                .map(RegistryKeyNode::Local),
             Self::Target(key_node) => key_node
                 .subkey(name)
-                .map(|target| RegistryKeyNode::Target(target)),
+                .map(RegistryKeyNode::Target),
         }
     }
 
@@ -90,11 +90,11 @@ impl<'d, 'h> RegistryKeyNode<'d, 'h> {
         match self {
             #[cfg(target_os = "windows")]
             Self::Local(key_node) => {
-                Ok(key_node.subkeys()).map(|local| RegistrySubKeys::Local(local))
+                Ok(RegistrySubKeys::Local(key_node.subkeys()))
             }
             Self::Target(key_node) => key_node
                 .subkeys()
-                .map(|target| RegistrySubKeys::Target(target)),
+                .map(RegistrySubKeys::Target),
         }
     }
 
@@ -103,10 +103,10 @@ impl<'d, 'h> RegistryKeyNode<'d, 'h> {
             #[cfg(target_os = "windows")]
             Self::Local(key_node) => key_node
                 .value(name)
-                .map(|local| RegistryKeyValue::Local(local)),
+                .map(RegistryKeyValue::Local),
             Self::Target(key_node) => key_node
                 .value(name)
-                .map(|target| RegistryKeyValue::Target(target)),
+                .map(RegistryKeyValue::Target),
         }
     }
 
@@ -114,11 +114,11 @@ impl<'d, 'h> RegistryKeyNode<'d, 'h> {
         match self {
             #[cfg(target_os = "windows")]
             Self::Local(key_node) => {
-                Ok(key_node.values()).map(|local| RegistryKeyValues::Local(local))
+                Ok(RegistryKeyValues::Local(key_node.values()))
             }
             Self::Target(key_node) => key_node
                 .values()
-                .map(|target| RegistryKeyValues::Target(target)),
+                .map(RegistryKeyValues::Target),
         }
     }
 }
@@ -129,7 +129,7 @@ pub enum RegistryKeyValue<'d, 'h> {
     Target(TargetRegistryKeyValue<'d, 'h>),
 }
 
-impl<'d, 'h> RegistryKeyValue<'d, 'h> {
+impl RegistryKeyValue<'_, '_> {
     pub fn binary_data(&self) -> Result<Vec<u8>> {
         match self {
             #[cfg(target_os = "windows")]
@@ -177,14 +177,14 @@ pub enum RegistryKeyValues<'d, 'h, 'n> {
     Target(TargetRegistryKeyValues<'d, 'h>),
 }
 
-impl<'d, 'h, 'n> Iterator for RegistryKeyValues<'d, 'h, 'n> {
+impl<'d, 'h> Iterator for RegistryKeyValues<'d, 'h, '_> {
     type Item = Result<RegistryKeyValue<'d, 'h>>;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(iter) => Some(iter.next()?.map(|local| RegistryKeyValue::Local(local))),
-            Self::Target(iter) => Some(iter.next()?.map(|target| RegistryKeyValue::Target(target))),
+            Self::Local(iter) => Some(iter.next()?.map(RegistryKeyValue::Local)),
+            Self::Target(iter) => Some(iter.next()?.map(RegistryKeyValue::Target)),
         }
     }
 }
@@ -195,14 +195,14 @@ pub enum RegistrySubKeys<'d, 'h, 'n> {
     Target(TargetRegistrySubKeys<'d, 'h>),
 }
 
-impl<'d, 'h, 'n> Iterator for RegistrySubKeys<'d, 'h, 'n> {
+impl<'d, 'h> Iterator for RegistrySubKeys<'d, 'h, '_> {
     type Item = Result<RegistryKeyNode<'d, 'h>>;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self {
             #[cfg(target_os = "windows")]
-            Self::Local(iter) => Some(iter.next()?.map(|local| RegistryKeyNode::Local(local))),
-            Self::Target(iter) => Some(iter.next()?.map(|target| RegistryKeyNode::Target(target))),
+            Self::Local(iter) => Some(iter.next()?.map(RegistryKeyNode::Local)),
+            Self::Target(iter) => Some(iter.next()?.map(RegistryKeyNode::Target)),
         }
     }
 }

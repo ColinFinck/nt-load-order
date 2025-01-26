@@ -20,7 +20,7 @@ use crate::{dpi_adjust_size, FONT_FAMILY, FONT_SIZE};
 pub fn build_link_label_font() -> nwg::Font {
     let family_name = OsStr::new(FONT_FAMILY)
         .encode_wide()
-        .chain(Some(0u16).into_iter())
+        .chain(Some(0u16))
         .collect::<Vec<u16>>();
     let family_name_ptr = family_name.as_ptr();
 

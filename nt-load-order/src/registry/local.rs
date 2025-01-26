@@ -18,7 +18,7 @@ pub struct LocalRegistryHive {
 }
 
 impl LocalRegistryHive {
-    pub fn key_node<'d, 'h>(&self, path: &str) -> Result<LocalRegistryKeyNode> {
+    pub fn key_node(&self, path: &str) -> Result<LocalRegistryKeyNode> {
         let key = self.system_key.open_subkey(path)?;
         let name = path.rsplit_once('\\').map(|(_, name)| name).unwrap_or(path);
 
@@ -39,7 +39,7 @@ impl LocalRegistryKeyNode {
         &self.name
     }
 
-    pub fn subkey<'d, 'h>(&self, name: &str) -> Result<LocalRegistryKeyNode> {
+    pub fn subkey(&self, name: &str) -> Result<LocalRegistryKeyNode> {
         let key = self.key.open_subkey(name)?;
 
         Ok(LocalRegistryKeyNode {
@@ -48,7 +48,7 @@ impl LocalRegistryKeyNode {
         })
     }
 
-    pub fn subkeys<'n>(&'n self) -> LocalRegistrySubKeys<'n> {
+    pub fn subkeys(&self) -> LocalRegistrySubKeys<'_> {
         let enum_keys = self.key.enum_keys();
 
         LocalRegistrySubKeys {
@@ -66,7 +66,7 @@ impl LocalRegistryKeyNode {
         })
     }
 
-    pub fn values<'n>(&'n self) -> LocalRegistryKeyValues<'n> {
+    pub fn values(&self) -> LocalRegistryKeyValues<'_> {
         let enum_values = self.key.enum_values();
         LocalRegistryKeyValues { enum_values }
     }
@@ -106,7 +106,7 @@ pub struct LocalRegistryKeyValues<'n> {
     enum_values: EnumValues<'n>,
 }
 
-impl<'n> Iterator for LocalRegistryKeyValues<'n> {
+impl Iterator for LocalRegistryKeyValues<'_> {
     type Item = Result<LocalRegistryKeyValue>;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -125,7 +125,7 @@ pub struct LocalRegistrySubKeys<'n> {
     enum_keys: EnumKeys<'n>,
 }
 
-impl<'n> Iterator for LocalRegistrySubKeys<'n> {
+impl Iterator for LocalRegistrySubKeys<'_> {
     type Item = Result<LocalRegistryKeyNode>;
 
     fn next(&mut self) -> Option<Self::Item> {

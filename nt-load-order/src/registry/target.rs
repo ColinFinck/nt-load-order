@@ -124,7 +124,7 @@ pub struct TargetRegistryKeyValue<'d, 'h> {
     key_value: KeyValue<'h, &'d [u8]>,
 }
 
-impl<'d, 'h> TargetRegistryKeyValue<'d, 'h> {
+impl TargetRegistryKeyValue<'_, '_> {
     pub fn binary_data(&self) -> Result<Vec<u8>> {
         let key_value_data = self
             .key_value

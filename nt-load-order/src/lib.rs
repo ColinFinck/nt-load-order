@@ -194,3 +194,9 @@ impl NtLoadOrder {
         Ok(entries.into_iter().collect())
     }
 }
+
+impl Default for NtLoadOrder {
+    fn default() -> Self {
+        Self::new()
+    }
+}

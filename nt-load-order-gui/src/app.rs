@@ -248,10 +248,8 @@ impl App {
     }
 
     fn on_custom_system_root_path_press(&self, evt: nwg::Event) {
-        if evt == nwg::Event::OnMousePress(nwg::MousePressEvent::MousePressLeftUp) {
-            if self.select_custom_system_root() {
-                self.update_load_order();
-            }
+        if evt == nwg::Event::OnMousePress(nwg::MousePressEvent::MousePressLeftUp) && self.select_custom_system_root() {
+            self.update_load_order();
         }
     }
 

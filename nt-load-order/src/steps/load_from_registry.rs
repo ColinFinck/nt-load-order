@@ -126,7 +126,7 @@ fn add_service(
     reason: String,
 ) -> Result<()> {
     let name = service.name().to_string();
-    let image_path = service_image_path(&service);
+    let image_path = service_image_path(service);
 
     let mut group = None;
     if let Ok(value) = service.value("Group") {
